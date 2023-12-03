@@ -1,0 +1,53 @@
+version: "3.9"
+
+services:
+
+  bank-portal-backend:
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    image: 192.168.66.228:9001/synpulse8/bank-portal-backend:latest
+    container_name: bank-portal-backend
+    ports:
+      - "8090:8090"
+    environment:
+      CONTAINER_HOST: host.docker.internal
+      REDIS_HOST: host.docker.internal
+
+  user-service:
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    image: 192.168.66.228:9001/synpulse8/user-service:latest
+    container_name: user-service
+    ports:
+      - "8091:8091"
+    environment:
+      CONTAINER_HOST: host.docker.internal
+      REDIS_HOST: host.docker.internal
+
+  adapter-service:
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    image: 192.168.66.228:9001/synpulse8/adapter-service:latest
+    container_name: adapter-service
+    ports:
+      - "8093:8093"
+    environment:
+      CONTAINER_HOST: host.docker.internal
+      REDIS_HOST: host.docker.internal
+
+  bank-core-service:
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    image: 192.168.66.228:9001/synpulse8/bank-core-service:latest
+    container_name: bank-core-service
+    ports:
+      - "8092:8092"
+    environment:
+      CONTAINER_HOST: host.docker.internal
+      REDIS_HOST: host.docker.internal
+
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - "6379:6379"
